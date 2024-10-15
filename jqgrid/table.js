@@ -1,12 +1,23 @@
 $(document).ready(function () {
     $("#alarmasTable").jqGrid({
-        url: "api.php",
+        url: "./api.php",
         datatype: "json",
         mtype: "POST",
         colNames: [
-            "Alarma", "Tag", "Sensor", "Type", "Tiempo", "Última Activación", "Acciones"
+            "select All", "Alarma", "Tag", "Sensor", "Type", "Tiempo", "Última Activación", "Acciones"
         ],
         colModel: [
+            {
+                name: "select All",
+                index: "select All",
+                width: 100,
+                sortable: false,
+                formatter: function (cellvalue, options, rowObject) {
+                    return (
+                        '<input type="checkbox" class="select-checkbox" value="' + rowObject.codigo_alarma + '">'
+                    );
+                },
+            },
             { name: "codigo_alarma", index: "codigo_alarma", width: 150, sortable: true },
             { name: "id_tag", index: "id_tag", width: 150, sortable: true },
             { name: "idSensor", index: "idSensor", width: 150, sortable: true },
@@ -20,12 +31,9 @@ $(document).ready(function () {
                 sortable: false,
                 formatter: function (cellvalue, options, rowObject) {
                     return (
-                        '<button class="btn-icon btn-icon-edit" data-id="' +
+                        '<button class="btn-icon btn-icon-check-double" title="ACK" data-id="' +
                         rowObject.codigo_alarma +
-                        '"><i class="fas fa-edit"></i></button> ' +
-                        '<button class="btn-icon btn-icon-delete" data-id="' +
-                        rowObject.codigo_alarma +
-                        '"><i class="fas fa-trash"></i></button>'
+                        '"><i class="fas fa-check-double"></i></button> '
                     );
                 },
             }
@@ -36,11 +44,100 @@ $(document).ready(function () {
         sortname: "codigo_alarma",
         sortorder: "asc",
         viewrecords: true,
-        caption: "Alarmas",
         height: "100%",
         autowidth: true,
     });
-    
+
+    $(".alarm-row").addClass("alarm-row-animated");
+
+    function NewGrd_DelToolbar(aToolbar, aGrd) {
+        var iToolbar = aToolbar;
+        var iGrd = aGrd;
+        if (iToolbar && iGrd) {
+            var iObj = $("#" + iToolbar);
+            var iHtml = "<div id=\"" + iToolbar + "\" class=\"btn-group_" + iGrd + "\" role=\"group\" aria-label=\"Toolbar_" + iToolbar + "\">";
+            iHtml += "<button type=\"button\" id=\"btnExport_" + iGrd + "\" class=\"fa fa-download btn btn-secondary BntGrid\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"export csv\"></button>";
+            iHtml += "<button type=\"button\" id=\"btnFilter_" + iGrd + "\" class=\"fa fa-filter btn btn-secondary BntGrid\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"filter data\"></button>";
+            iHtml += "<button type=\"button\" id=\"btnColumns_" + iGrd + "\" class=\"fa fa-columns btn btn-secondary BntGrid\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"hide/show columns\"></button>";
+            iHtml += "<button type=\"button\" id=\"btnRefresh_" + iGrd + "\" class=\"fa fa-refresh btn btn-secondary BntGrid\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"refresh data\"></button>";
+            iHtml += "</div>";
+            iObj.replaceWith(iHtml);
+            iObj.data("grd", iGrd);
+
+            // Filter button functionality
+            $("#btnFilter_" + iGrd).on("click", function () {
+                $(".ui-search-toolbar", $("#gbox_" + iGrd)).toggleClass("Invisible");
+            });
+
+            // Column chooser functionality
+            $("#btnColumns_" + iGrd).on("click", function () {
+                $("#" + iGrd).jqGrid("columnChooser", {
+                    caption: "Show/Hide Columns",
+                    bSubmit: "Submit",
+                    bCancel: "Cancel",
+                    done: function (perm) {
+                        if (perm) {
+                            this.jqGrid("remapColumns", perm, true);
+                        }
+                    }
+                });
+                return false;
+            });
+
+            // Export to CSV functionality
+            $("#btnExport_" + iGrd).on("click", function () {
+                var grid = $("#" + iGrd);
+                var rowIds = grid.jqGrid("getDataIDs");
+                var colModel = grid.jqGrid("getGridParam", "colModel");
+
+                // Prepare CSV content
+                var csvContent = "";
+
+                // Add headers (excluding "select All" and "Acciones")
+                var headers = colModel.filter(function (col) {
+                    return col.name !== "select All" && col.name !== "actions";
+                }).map(function (col) {
+                    return '"' + (col.label || col.name) + '"';
+                }).join(",") + "\n";
+                csvContent += headers;
+
+                // Add data rows
+                for (var i = 0; i < rowIds.length; i++) {
+                    var rowData = grid.jqGrid("getRowData", rowIds[i]);
+                    var rowContent = colModel.filter(function (col) {
+                        return col.name !== "select All" && col.name !== "actions";
+                    }).map(function (col) {
+                        return '"' + (rowData[col.name] || "") + '"';
+                    }).join(",") + "\n";
+                    csvContent += rowContent;
+                }
+
+                // Create and trigger download
+                var blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+                var link = document.createElement("a");
+                if (link.download !== undefined) {
+                    var url = URL.createObjectURL(blob);
+                    link.setAttribute("href", url);
+                    link.setAttribute("download", "Alarmas_" + new Date().toISOString() + ".csv"); // <--- Aquí puedes definir el nombre del archivo
+                    link.style.visibility = 'hidden';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }
+            });
+
+            // Refresh grid functionality
+            $("#btnRefresh_" + iGrd).on("click", function () {
+                $("#" + iGrd).trigger('reloadGrid');
+            });
+
+            return $("#" + iToolbar);
+        }
+    }
+
+    // Añadir botones al toolbar
+    NewGrd_DelToolbar("contenedor_buttons", "alarmasTable");
+
 
     $("#alarmasTable").jqGrid("filterToolbar", {
         stringResult: true,
@@ -68,5 +165,5 @@ $(document).ready(function () {
             link.click();
         },
     });
-    
+
 });

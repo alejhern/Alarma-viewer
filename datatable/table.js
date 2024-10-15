@@ -19,14 +19,32 @@ $(document).ready(function () {
         pageLength: 10, // Valor inicial para mostrar
         colReorder: true, // Permite reordenar columnas
         columns: [
-            { data: null, orderable: false, render: function (data, type, row) { return '<input type="checkbox" class="select-checkbox" value="' + row.codigo_alarma + '">'; } },
+            { 
+                data: null
+                , orderable: false
+                , render: function (data, type, rowObject)
+                {
+                    return '<input type="checkbox" class="select-checkbox" value="' + rowObject.codigo_alarma + '">';
+                }
+            },
             { data: "codigo_alarma" },
             { data: "id_tag" },
             { data: "idSensor" },
             { data: "type" },
             { data: "tiempo" },
             { data: "tiempo_ultima_activacion" },
-            { data: null, orderable: false, render: function (data, type, row) { return '<button class="btn-icon btn-icon-edit" data-id="' + row.codigo_alarma + '"><i class="fas fa-edit"></i></button> <button class="btn-icon btn-icon-delete" data-id="' + row.codigo_alarma + '"><i class="fas fa-trash"></i></button>'; } }
+            {
+                data: null
+                , orderable: false
+                , render: function (data, type, rowObject)
+                {
+                    return (
+                        '<button class="btn-icon btn-icon-check-double" title="ACK" data-id="' +
+                        rowObject.codigo_alarma +
+                        '"><i class="fas fa-check-double"></i></button> '
+                    ); 
+                }
+            }
         ],
         dom: 'lBfrtip', // l: length changing input control, B: buttons, f: filtering input, r: processing display element, t: the table, i: table information summary, p: pagination control
         buttons: [
@@ -81,6 +99,8 @@ $(document).ready(function () {
             table.colReorder.order(parsedState.colReorder); // Reordena las columnas
         }
     }
+
+    $(".alarm-row").addClass("alarm-row-animated");
 
     // Seleccionar/desmarcar todos los checkboxes al hacer clic en el checkbox principal
     $(".selectAll").on("click", function () {

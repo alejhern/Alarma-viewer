@@ -1,5 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f4f8;
+    color: #333;
+}
+
 #alarmasTable {
-    margin: 0 auto;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#contenedor_buttons {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+th {
+    background: linear-gradient(45deg, #4a90e2, #5cb3ff) !important;
+    color: #ffffff;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 20px 15px;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    border: none;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+#alarmasTable tbody tr {
+    background-color: #fff;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+#alarmasTable tbody tr:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    background-color: #f8f9ff;
+}
+
+#alarmasTable td {
+    padding: 15px;
+    border: none;
+    font-size: 0.9rem;
     text-align: center;
 }
 
@@ -7,44 +59,76 @@
     border: none;
     background-color: transparent;
     cursor: pointer;
-}
-
-.btn-icon i {
-    font-size: 18px;
-}
-
-.btn-icon-edit {
-    color: #4CAF50; /* Verde */
-}
-
-.btn-icon-delete {
-    color: #f44336; /* Rojo */
-}
-
-tfoot input {
-    width: 100%;
-    padding: 3px;
-    box-sizing: border-box;
-}
-
-/* Estilos para los botones del contenedor con iconos */
-.dt-button {
     padding: 8px;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    font-size: 14px;
-    cursor: pointer;
+    border-radius: 50%;
+    font-size: 16px;
+    color: #4a90e2;
+    transition: all 0.3s ease;
+}
+
+.btn-icon:hover {
+    background-color: #e8f0fe;
+    color: #2c5282;
+}
+
+.btn-icon-check-double {
+    color: #48bb78;
+}
+
+/* .alarm-status {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+} */
+
+/* .alarm-status-active {
+    background-color: #c6f6d5;
+    color: #2f855a;
+}
+
+.alarm-status-inactive {
+    background-color: #fed7d7;
+    color: #c53030;
+} */
+
+@keyframes pulseBackground {
+    0% {
+        background-color: #fff;
+    }
+    50% {
+        background-color: #e6f2ff;
+    }
+    100% {
+        background-color: #fff;
+    }
+}
+
+.alarm-row-animated {
+    animation: pulseBackground 2s infinite;
+}
+
+/* Estilos para las filas pares e impares */
+#alarmasTable tbody tr:nth-child(even) {
+    background-color: #f8fafd;
+}
+
+#alarmasTable tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+/* Estilos para inputs */
+input[type="text"] {
+    padding: 10px;
+    border: 1px solid #d7e4f2;
     border-radius: 4px;
-    margin-right: 5px;
-    display: inline-flex;
-    align-items: center;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: #333;
+    transition: all 0.2s ease;
 }
 
-.dt-button i {
-    margin-right: 5px; /* Espacio entre el icono y el texto */
-}
-
-.dt-button:hover {
-    background-color: #0056b3;
+input[type="text"]:focus, input[type="search"]:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 10px rgba(74, 144, 226, 0.5);
 }

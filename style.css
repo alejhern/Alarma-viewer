@@ -1,0 +1,50 @@
+#alarmasTable {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.btn-icon {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.btn-icon i {
+    font-size: 18px;
+}
+
+.btn-icon-edit {
+    color: #4CAF50; /* Verde */
+}
+
+.btn-icon-delete {
+    color: #f44336; /* Rojo */
+}
+
+tfoot input {
+    width: 100%;
+    padding: 3px;
+    box-sizing: border-box;
+}
+
+/* Estilos para los botones del contenedor con iconos */
+.dt-button {
+    padding: 8px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 5px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.dt-button i {
+    margin-right: 5px; /* Espacio entre el icono y el texto */
+}
+
+.dt-button:hover {
+    background-color: #0056b3;
+}

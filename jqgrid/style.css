@@ -1,0 +1,145 @@
+#alarmasTable {
+    margin: 0 auto;
+    text-align: center;
+    border-collapse: collapse;
+    width: 80%;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+#alarmasTable thead {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    border-radius: 10px 10px 0 0;
+}
+
+#alarmasTable thead th {
+    font-weight: bold;
+    text-align: left;
+    padding: 10px;
+    border-right: 1px solid #ddd;
+}
+
+#alarmasTable thead th:last-child {
+    border-right: none;
+}
+
+#alarmasTable tbody {
+    background-color: #f9f9f9;
+}
+
+#alarmasTable tbody tr {
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.3s ease;
+}
+
+#alarmasTable tbody tr:hover {
+    background-color: #f2f2f2;
+}
+
+#alarmasTable td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+
+#alarmasTable td:first-child {
+    border-left: 1px solid #ddd;
+}
+
+#alarmasTable td:last-child {
+    border-right: none;
+}
+
+.btn-icon {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 18px;
+    color: #333;
+}
+
+.btn-icon:hover {
+    background-color: #f2f2f2;
+}
+
+.btn-icon-edit {
+    color: #4CAF50;
+    /* Verde */
+    border: 1px solid #4CAF50;
+}
+
+.btn-icon-delete {
+    color: #f44336;
+    /* Rojo */
+    border: 1px solid #f44336;
+}
+
+tfoot input {
+    width: 98%;
+    padding: 3px;
+    box-sizing: border-box;
+    margin-left: 1%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+/* Estilos para los botones del contenedor con iconos */
+.dt-button {
+    padding: 8px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 5px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.dt-button i {
+    margin-right: 5px;
+    /* Espacio entre el icono y el texto */
+}
+
+.dt-button:hover {
+    background-color: #0056b3;
+}
+
+.alarm-row {
+    transition: background-color 0.3s ease;
+}
+
+.alarm-row:hover {
+    background-color: #f2f2f2;
+}
+
+.alarm-name {
+    font-weight: bold;
+    color: #333;
+}
+
+.alarm-status {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.alarm-status-active {
+    background-color: #4CAF50;
+}
+
+.alarm-status-inactive {
+    background-color: #f44336;
+}

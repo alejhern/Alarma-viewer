@@ -17,7 +17,11 @@ $(document).ready(function () {
         },
         lengthMenu: [10, 25, 50, 100], // Control de "Show entries"
         pageLength: 10, // Valor inicial para mostrar
-        colReorder: true, // Permite reordenar columnas
+        colReorder: {
+            fixedColumnsLeft: 1,
+            fixedColumnsRight: 1,
+            order: [1, 2, 3, 4, 5, 6] // Ajusta esto según el número total de columnas
+        }, // Permite reordenar columnas
         columns: [
             { 
                 data: null
